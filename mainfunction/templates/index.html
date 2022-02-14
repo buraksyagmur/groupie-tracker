@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Groupie tracker</title>
+  <link rel="stylesheet" href="/mainfunction/style/style.css" />
+</head>
+
+<body>
+
+  <div class=navbar>
+    <h1>Groupie Tracker</h1>
+  </div>
+  <!-- <div class=justspace>
+  <p>&nbsp;</p>
+  </div> -->
+  <div>
+    <ul>
+      <li class="nav-bar-links"><a href="filters">Filters</a></li>
+    </ul>
+  </div>
+  <!-- <div>
+    <a class="logo" href="/">Search</a>
+    <form action="/search" method="GET">
+      <input
+        autofocus
+        class="search-input"
+        value=""
+        placeholder="Enter a Band"
+        type="search"
+        name="q"
+      />
+    </form>
+  </div> -->
+
+<label for="searchbar">Search:</label>
+<input list="searchid" id="searchbar" name="searchbar" />
+
+<datalist id="searchid">
+  {{range .}}
+    <option value={{.Name}}>
+      {{range $key, $value := .DatesLocations}}
+      <option value={{$key}}>{{end}} {{end}}  
+</datalist>
+{{range .}}
+  <form action="/details" method="POST" class="index-form">
+    <ul><input type="hidden" name="details" value={{.ID}}>
+      <li><input type="submit" class=fulldetailsbutton value={{.Name}}></li>
+    </ul>
+  </form>
+{{end}}
+  <button onclick="topFunction()"  id="myBtn" title="Go to top"><span>Scroll Back Top</span></button>
+  <script src="/mainfunction/style/app.js"> </script>
+
+</body>
+
+</html>

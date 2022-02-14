@@ -1,0 +1,154 @@
+.mainpagenames {
+    color: black;
+    text-align: center;
+    margin-top: 40px;
+    
+  }
+
+  .fulldetailsbutton{
+      text-align: center;
+      border: none;
+      padding: 0;
+      background: none;
+      border-bottom: 6px solid rgb(129, 173, 255);
+      font-family: "Lucida Console", "Courier New", monospace;
+      font-weight: bold;
+      font-size: 30px;
+      margin-bottom:50px;  
+  }
+  .fulldetailsbutton:hover {
+    cursor: pointer;
+  }
+ /* .justspace{
+   margin-top: 80px;
+   margin-bottom:80px;
+
+ } */
+
+  body{
+    background-color: beige;
+    margin: 0;
+  }
+  .navbar {
+    color:beige;
+    overflow: hidden;
+    background-color:rgb(2, 47, 131);
+    display: block;
+    /* position: fixed; 
+    top: 0;  */
+    width: 100%; 
+    text-align: center;
+    height: 80px;
+    margin-bottom: 60px; 
+  }
+  .nav-bar-links {
+    list-style: none;
+    margin-bottom: 40px;
+    /* box-shadow: rgb(102, 102, 92);
+    padding: 1.5rem 0; */
+  }
+
+  .nav-bar-links a {
+    margin-left: 44%;
+    margin-right: 44%;
+    font-size: 1.8rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    background-color: rgb(199, 199, 182);
+    color:black;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.5em;
+  }
+
+ #myBtn {
+  display: none; 
+  position: fixed; 
+  bottom: 20px; 
+  right: 30px; 
+  border-radius: 4px;
+  background-color: rgb(2, 47, 131);
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 18px;
+  padding: 20px;
+  width: 200px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+
+}
+#myBtn span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+#myBtn span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -2px;
+  transition: 0.5s;
+  transform:rotate(-90deg);
+}
+#myBtn:hover span {
+  padding-right: 25px;
+}
+
+#myBtn:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+.detailpage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  
+}
+.detailpagename {
+  color: black;
+  font-family: "Lucida Console", "Courier New", monospace;
+  margin-top: 0px;
+  font-size:40px;
+}
+.detailpageimg{
+  /* margin-left: 900px; */
+}
+.otherinfosuntilconcert{
+  /* margin-top: -320px; */
+  margin-left: 30px;
+ font-family: "Lucida Console", "Courier New", monospace;
+}
+.concert{
+  /* margin-top:-380px; */
+  /* margin-left: 500px; */
+  font-family: "Lucida Console", "Courier New", monospace;
+  font-size: 15px;
+}
+ul.locations {
+  list-style-type: square;
+}
+ul.dates {
+  list-style-type: circle;
+}
+img{
+  object-fit: cover;
+}
+.homebutton {
+  margin-top:50px;
+  z-index: 1000; 
+  overflow: hidden;
+  position: fixed; 
+  top: -10px; 
+  width: 11%; 
+  background-color:beige ;
+  padding: 0;
+  border-radius: 121px;
+  text-decoration: none;
+}
+.homebutton a{
+  text-decoration: none;
+}

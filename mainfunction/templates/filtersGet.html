@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Groupie tracker</title>
+  <link rel="stylesheet" href="/mainfunction/style/style.css" />
+</head>
+<body>
+    <div class="form">
+        <form action="/filters" method="POST" class="filterForm">
+          <div>
+            <label for="create">creation date</label>
+            <input type="range" id="createDate" name="create" min="1900" max="2022" step="1" value="1900" onChange="change();"><span id="result"></span>
+
+          </div>
+          <div>
+            <label for="createuntil">creation date until</label>
+            <input type="range" id="createDateUntil" name="createuntil" min="1900" max="2022" step="1" value="2022" onChange="change2();"><span id="result2"></span>
+          </div>
+          <div>
+            <script>
+              var result = document.getElementById("result");
+              var result2= document.getElementById("result2")
+              var createDate = document.getElementById("createDate");
+              var createDateUntil = document.getElementById("createDateUntil");
+              function change(){
+                  result.innerText = createDate.value;
+              }
+              function change2(){
+                result2.innerText = createDateUntil.value;
+              }
+              </script>
+          <div>
+            <label for="first">first album date</label>
+            <input type="date" id="firstAlbum" name="first" value="1900-01-01">
+          </div>
+          <div>
+            <label for="firstuntil">first album date until</label>
+            <input type="date" id="firstAlbum" name="firstuntil" value="2022-01-02">
+          </div>
+          
+          <fieldset>
+            <legend>number of members</legend>
+            <input type="checkbox" id="Members1" name="member1" value="1"><label for="Members1">1</label>
+            <input type="checkbox" id="Members2" name="member2" value="2"><label for="Members2">2</label>
+            <input type="checkbox" id="Members3" name="member3" value="3"><label for="Members3">3</label>
+            <input type="checkbox" id="Members4" name="member4" value="4"><label for="Members4">4</label>
+            <input type="checkbox" id="Members5" name="member5" value="5"><label for="Members5">5</label>
+            <input type="checkbox" id="Members6" name="member6" value="6"><label for="Members6">6</label>
+            <input type="checkbox" id="Members7" name="member7" value="7"><label for="Members7">7</label>
+            <input type="checkbox" id="Members8" name="member8" value="8"><label for="Members8">8</label>
+            <input type="checkbox" id="Members9" name="member9" value="9"><label for="Members9">9</label>
+          </fieldset>
+         
+    
+          <fieldset class="locCheckboxes">
+          <legend>Locations</legend>
+            {{range .}}
+            <div>
+              <input type="checkbox" id={{.}} name="locations" value={{.}}>
+              <label for={{.}}>{{Rename .}}</label>
+            </div>
+            {{end}}
+          <button>Apply Filters</button>
+        </form>
+      </div>
+      <button onclick="topFunction()"  id="myBtn" title="Go to top"><span>Scroll Back Top</span></button>
+  <script src="/mainfunction/style/app.js"> </script>
+</body>
+</html>

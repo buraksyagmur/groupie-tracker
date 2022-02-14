@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Groupie tracker</title>
+    <link rel="stylesheet" href="/mainfunction/style/style.css" />
+
+</head>
+
+<body>
+
+    <section>
+        <button type="button" class="homebutton"><a href="/">Return to Home Page</a></button>
+        <div class="navbar"><h1>{{.Name}}</h1></div>
+        <div class="detailpage">
+        
+       <div class= "otherinfosuntilconcert">
+        <p><b>Creation Date:</b> {{.CreationDate}}</p>
+        <p><b>First Album Released:</b> {{.FirstAlbum}}</p>
+        <p><b>Members:</b></p>
+        {{range .Members}}
+        <ul>
+            <li>{{.}}</li>
+        </ul>
+        {{end}}
+    </div>
+    <div class="concert">
+    <p><b>Concert Locations and Dates:</b></p>
+        {{range $key, $value := .DatesLocations}}
+       <ul class="locations"> <li><b>{{$key}}</b></li></ul>
+        {{range $value}}
+        <ul class="dates">
+            <li>{{.}}</li>
+        </ul>
+        <br> {{end}} {{end}}
+        </p>
+    </div>
+    <div class="detailpageimg"><img src={{.Image}} width="350" alt={{.Name}}></div>
+</div>
+    </section>
+</body>
