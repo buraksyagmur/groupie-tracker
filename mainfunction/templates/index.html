@@ -42,6 +42,11 @@
 <datalist id="searchid">
   {{range .}}
     <option value={{.Name}}>
+      <option value={{.Members}}>
+        <option value={{.FirstAlbum}}>
+          <option value={{.CreationDate}}>
+
+        
       {{range $key, $value := .DatesLocations}}
       <option value={{$key}}>{{end}} {{end}}  
 </datalist>
