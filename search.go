@@ -29,9 +29,9 @@ func SearchByCreationYear(data []ArtistAllData, searchCreationYear string) []Art
 		if intSearchCreationYear == artist.CreationDate {
 			artistAllData = append(artistAllData, artist)
 		}
-		return artistAllData
 	}
-	return nil
+	fmt.Println("searchedbycreationyear")
+	return artistAllData
 }
 
 func SearchByFirstAlbum(data []ArtistAllData, searchFirstAlbum string) []ArtistAllData {
@@ -40,9 +40,9 @@ func SearchByFirstAlbum(data []ArtistAllData, searchFirstAlbum string) []ArtistA
 		if searchFirstAlbum == artist.FirstAlbum {
 			artistAllData = append(artistAllData, artist)
 		}
-		return artistAllData
 	}
-	return nil
+	fmt.Println("searchedbyfirstalbum")
+	return artistAllData
 }
 
 func SearchByName(data []ArtistAllData, searchName string) []ArtistAllData {
@@ -51,7 +51,20 @@ func SearchByName(data []ArtistAllData, searchName string) []ArtistAllData {
 		if searchName == artist.Name {
 			artistAllData = append(artistAllData, artist)
 		}
-		return artistAllData
 	}
-	return nil
+	fmt.Println("searchedbyname")
+	return artistAllData
+}
+
+func SearchByLocation(data []ArtistAllData, searchLocation string) []ArtistAllData {
+	var artistAllData []ArtistAllData
+	for _, artist := range data {
+		for i := 0; i < len(artist.Locations); i++ {
+			if searchLocation == artist.Locations[i] {
+				artistAllData = append(artistAllData, artist)
+			}
+		}
+	}
+	fmt.Println("searchedbylocations")
+	return artistAllData
 }

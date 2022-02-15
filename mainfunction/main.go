@@ -15,13 +15,16 @@ var data []groupietracker.ArtistAllData
 
 func mainPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err := groupietracker.GetData()
-	if err != nil {
-		fmt.Println(1)
-		log.Fatal("error - get data function")
+	if r.Method == "GET" {
+		err := groupietracker.GetData()
+		if err != nil {
+			fmt.Println(1)
+			log.Fatal("error - get data function")
+		}
 	}
-
 	data = groupietracker.ArtistsFull
+
+	fmt.Println(r.Method)
 	tpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		log.Printf("Parse Error: %v", err)
@@ -136,29 +139,34 @@ func filterPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func searchPage(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	err := groupietracker.GetData()
-	if err != nil {
-		fmt.Println(1)
-		log.Fatal("error - get data function")
-	}
+	// err := groupietracker.GetData()
+	// if err != nil {
+	// 	fmt.Println(1)
+	// 	log.Fatal("error - get data function")
+	// }
+}
 	// searchwords:=r.FormValue("searchbar")
 	// afterSearchData:=groupietracker.SearchFull(data, )
 	var searchedData []groupietracker.ArtistAllData
 	searchvalue := r.FormValue("searchbar")
 	fmt.Println(searchvalue)
 	searchvalueslice := strings.Split(searchvalue, "")
+	searchvaluesrune := []rune(searchvalue)
 	if searchvalueslice[1] == "-" || searchvalueslice[2] == "-" {
 		fmt.Println("first album date")
 		searchedData = groupietracker.SearchByFirstAlbum(data, searchvalue)
 	} else if searchvalueslice[0] == "1" || searchvalueslice[0] == "2" {
 		fmt.Println("this value is creation year")
 		searchedData = groupietracker.SearchByCreationYear(data, searchvalue)
-	} else {
+	} else if searchvaluesrune[0] >= 65 && searchvaluesrune[0] <= 90 {
 		searchedData = groupietracker.SearchByName(data, searchvalue)
 		fmt.Println("band name")
+	} else if searchvaluesrune[0] >= 97 && searchvaluesrune[0] <= 122 {
+		searchedData = groupietracker.SearchByLocation(data, searchvalue)
+		fmt.Println("location name")
 	}
-
 	tpl, err := template.ParseFiles("templates/search.html")
 	if err != nil {
 		log.Printf("Parse Error: %v", err)
@@ -171,7 +179,6 @@ func searchPage(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Error when Executing", http.StatusInternalServerError)
 		return
 	}
-	
 }
 
 func main() {

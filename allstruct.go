@@ -63,4 +63,5 @@ var (
 	Dates       DateRemoveIndex
 	Locations   LocationRemoveIndex
 	Relations   RelationRemoveIndex
+	Test ArtistAllData
 )
