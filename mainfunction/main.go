@@ -117,11 +117,7 @@ func filterPage(w http.ResponseWriter, r *http.Request) {
 		filtermembers8 := r.FormValue("member8")
 		filtermembers9 := r.FormValue("member9")
 		filterlocation := r.FormValue("locations")
-		fmt.Println("-----", filterlocation, "-------")
 		filterallmembers := (filtermembers1 + filtermembers2 + filtermembers3 + filtermembers4 + filtermembers5 + filtermembers6 + filtermembers7 + filtermembers8 + filtermembers9)
-		fmt.Println(filterallmembers)
-		fmt.Println(filtercreate, filtercreateuntil, filterfirst, filterfirstuntil)
-		fmt.Println(filtermembers1, filtermembers2, filtermembers3, filtermembers4, filtermembers5, filtermembers6, filtermembers7, filtermembers8, filtermembers9)
 		filteredData := groupietracker.FilterCreation(data, filtercreate, filtercreateuntil, filterfirst, filterfirstuntil, filterallmembers, filterlocation)
 		tpl, err := template.ParseFiles("templates/filtered.html")
 		if err != nil {
@@ -139,14 +135,44 @@ func filterPage(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// func filteredPage(w http.ResponseWriter, r *http.Request) {
-// 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-// 	err := groupietracker.GetData()
-// 	if err != nil {
-// 		fmt.Println(1)
-// 		log.Fatal("error - get data function")
-// 	}
-// }
+func searchPage(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	err := groupietracker.GetData()
+	if err != nil {
+		fmt.Println(1)
+		log.Fatal("error - get data function")
+	}
+	// searchwords:=r.FormValue("searchbar")
+	// afterSearchData:=groupietracker.SearchFull(data, )
+	var searchedData []groupietracker.ArtistAllData
+	searchvalue := r.FormValue("searchbar")
+	fmt.Println(searchvalue)
+	searchvalueslice := strings.Split(searchvalue, "")
+	if searchvalueslice[1] == "-" || searchvalueslice[2] == "-" {
+		fmt.Println("first album date")
+		searchedData = groupietracker.SearchByFirstAlbum(data, searchvalue)
+	} else if searchvalueslice[0] == "1" || searchvalueslice[0] == "2" {
+		fmt.Println("this value is creation year")
+		searchedData = groupietracker.SearchByCreationYear(data, searchvalue)
+	} else {
+		searchedData = groupietracker.SearchByName(data, searchvalue)
+		fmt.Println("band name")
+	}
+
+	tpl, err := template.ParseFiles("templates/search.html")
+	if err != nil {
+		log.Printf("Parse Error: %v", err)
+		http.Error(w, "Error when Parsing", http.StatusInternalServerError)
+		return
+	}
+
+	if err := tpl.Execute(w, searchedData); err != nil {
+		log.Printf("Execute Error: %v", err)
+		http.Error(w, "Error when Executing", http.StatusInternalServerError)
+		return
+	}
+	
+}
 
 func main() {
 	err := exec.Command("xdg-open", "http://localhost:8080/").Start()
@@ -161,6 +187,7 @@ func main() {
 	mux.HandleFunc("/", mainPage)
 	mux.HandleFunc("/details", detailspage)
 	mux.HandleFunc("/filters", filterPage)
+	mux.HandleFunc("/search", searchPage)
 
 	// add not found page
 	// mux.HandleFunc("/filtered", filteredPage)

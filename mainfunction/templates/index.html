@@ -36,20 +36,23 @@
     </form>
   </div> -->
 
-<label for="searchbar">Search:</label>
+  <form action="/search">
+  <label for="searchbar">Search:</label>
 <input list="searchid" id="searchbar" name="searchbar" />
-
 <datalist id="searchid">
   {{range .}}
-    <option value={{.Name}}>
+    <option value={{.Name}} name="names">
       <option value={{.Members}}>
-        <option value={{.FirstAlbum}}>
+        <option value={{.FirstAlbum}} name="firstalbum">
           <option value={{.CreationDate}}>
 
         
       {{range $key, $value := .DatesLocations}}
       <option value={{$key}}>{{end}} {{end}}  
+        
 </datalist>
+<input type="submit" value="Search">
+</form>
 {{range .}}
   <form action="/details" method="POST" class="index-form">
     <ul><input type="hidden" name="details" value={{.ID}}>
