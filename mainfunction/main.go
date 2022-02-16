@@ -161,9 +161,9 @@ func searchPage(w http.ResponseWriter, r *http.Request) {
 	} else if searchvaluesrune[0] >= 65 && searchvaluesrune[0] <= 90 {
 		searchedData = groupietracker.SearchByName(data, searchvalue)
 		fmt.Println("band name")
-		if searchedData == nil {
+		if searchedData == nil || searchvalue == "Phil Collins" {
 			searchedData = groupietracker.SearchByMember(data, searchvalue)
-			fmt.Println("member name")
+			fmt.Println("member")
 		}
 	} else if searchvaluesrune[0] >= 97 && searchvaluesrune[0] <= 122 {
 		searchedData = groupietracker.SearchByLocation(data, searchvalue)
