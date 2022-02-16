@@ -10,6 +10,7 @@ type ArtistAllData struct {
 	Locations      []string            `json:"locations"`
 	ConcertDates   []string            `json:"concertDates"`
 	DatesLocations map[string][]string `json:"datesLocations"`
+
 }
 
 type Artistforhomepage struct {
@@ -63,5 +64,5 @@ var (
 	Dates       DateRemoveIndex
 	Locations   LocationRemoveIndex
 	Relations   RelationRemoveIndex
-	Test ArtistAllData
+	Test        ArtistAllData
 )

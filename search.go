@@ -68,3 +68,16 @@ func SearchByLocation(data []ArtistAllData, searchLocation string) []ArtistAllDa
 	fmt.Println("searchedbylocations")
 	return artistAllData
 }
+
+func SearchByMember(data []ArtistAllData, searchMember string) []ArtistAllData {
+	var artistAllData []ArtistAllData
+	for _, artist := range data {
+		for i := 0; i < len(artist.Members); i++ {
+			if searchMember == artist.Members[i] {
+				artistAllData = append(artistAllData, artist)
+			}
+		}
+	}
+	fmt.Println("searchedbymembers")
+	return artistAllData
+}

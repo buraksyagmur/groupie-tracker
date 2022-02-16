@@ -23,8 +23,6 @@ func mainPage(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	data = groupietracker.ArtistsFull
-
-	fmt.Println(r.Method)
 	tpl, err := template.ParseFiles("templates/index.html")
 	if err != nil {
 		log.Printf("Parse Error: %v", err)
@@ -140,13 +138,13 @@ func filterPage(w http.ResponseWriter, r *http.Request) {
 
 func searchPage(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	// err := groupietracker.GetData()
-	// if err != nil {
-	// 	fmt.Println(1)
-	// 	log.Fatal("error - get data function")
-	// }
-}
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		// err := groupietracker.GetData()
+		// if err != nil {
+		// 	fmt.Println(1)
+		// 	log.Fatal("error - get data function")
+		// }
+	}
 	// searchwords:=r.FormValue("searchbar")
 	// afterSearchData:=groupietracker.SearchFull(data, )
 	var searchedData []groupietracker.ArtistAllData
@@ -163,6 +161,10 @@ func searchPage(w http.ResponseWriter, r *http.Request) {
 	} else if searchvaluesrune[0] >= 65 && searchvaluesrune[0] <= 90 {
 		searchedData = groupietracker.SearchByName(data, searchvalue)
 		fmt.Println("band name")
+		if searchedData == nil {
+			searchedData = groupietracker.SearchByMember(data, searchvalue)
+			fmt.Println("member name")
+		}
 	} else if searchvaluesrune[0] >= 97 && searchvaluesrune[0] <= 122 {
 		searchedData = groupietracker.SearchByLocation(data, searchvalue)
 		fmt.Println("location name")
