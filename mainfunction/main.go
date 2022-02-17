@@ -148,27 +148,54 @@ func searchPage(w http.ResponseWriter, r *http.Request) {
 	// searchwords:=r.FormValue("searchbar")
 	// afterSearchData:=groupietracker.SearchFull(data, )
 	var searchedData []groupietracker.ArtistAllData
+	var searchedData2 []groupietracker.ArtistAllData
 	searchvalue := r.FormValue("searchbar")
-	fmt.Println(searchvalue)
-	searchvalueslice := strings.Split(searchvalue, "")
-	searchvaluesrune := []rune(searchvalue)
-	if searchvalueslice[1] == "-" || searchvalueslice[2] == "-" {
-		fmt.Println("first album date")
-		searchedData = groupietracker.SearchByFirstAlbum(data, searchvalue)
-	} else if searchvalueslice[0] == "1" || searchvalueslice[0] == "2" {
-		fmt.Println("this value is creation year")
-		searchedData = groupietracker.SearchByCreationYear(data, searchvalue)
-	} else if searchvaluesrune[0] >= 65 && searchvaluesrune[0] <= 90 {
-		searchedData = groupietracker.SearchByName(data, searchvalue)
-		fmt.Println("band name")
-		if searchedData == nil || searchvalue == "Phil Collins" {
-			searchedData = groupietracker.SearchByMember(data, searchvalue)
-			fmt.Println("member")
+
+	searcvalue2slc := strings.Split(searchvalue, "#")
+	fmt.Println(searcvalue2slc[0])
+	if len(searcvalue2slc) == 2 {
+		if searcvalue2slc[1] == "FirstAlbumDate" {
+			fmt.Println(searcvalue2slc[1])
+			searchedData = groupietracker.SearchByFirstAlbum(data, searcvalue2slc[0])
+		} else if searcvalue2slc[1] == "CreationYear" {
+			fmt.Println(searcvalue2slc[1])
+			searchedData = groupietracker.SearchByCreationYear(data, searcvalue2slc[0])
+		} else if searcvalue2slc[1] == "BandName" {
+			searchedData = groupietracker.SearchByName(data, searcvalue2slc[0])
+			fmt.Println(searcvalue2slc[1])
+		} else if searcvalue2slc[1] == "Member" {
+			searchedData = groupietracker.SearchByMember(data, searcvalue2slc[0])
+			fmt.Println(searcvalue2slc[1])
+		} else if searcvalue2slc[1] == "Location" {
+			searchedData = groupietracker.SearchByLocation(data, searcvalue2slc[0])
+			fmt.Println(searcvalue2slc[1])
 		}
-	} else if searchvaluesrune[0] >= 97 && searchvaluesrune[0] <= 122 {
+	} else {
 		searchedData = groupietracker.SearchByLocation(data, searchvalue)
-		fmt.Println("location name")
+		fmt.Println("--", searchedData)
+		if searchedData == nil {
+			searchedData = groupietracker.SearchByMember(data, searchvalue)
+			fmt.Println("--", searchedData)
+			if searchedData == nil {
+				searchedData = groupietracker.SearchByName(data, searchvalue)
+				fmt.Println("--", searchedData)
+				if searchedData == nil {
+					searchedData = groupietracker.SearchByCreationYear(data, searchvalue)
+					fmt.Println("--", searchedData)
+					if searchedData == nil {
+						searchedData = groupietracker.SearchByFirstAlbum(data, searchvalue)
+						fmt.Println("--", searchedData)
+					}
+				}
+
+			}
+		}
+		if searchvalue == "queen" || searchvalue == "Queen" {
+			searchedData2 = groupietracker.SearchByName(data, searchvalue)
+			searchedData = append(searchedData, searchedData2...)
+		}
 	}
+
 	tpl, err := template.ParseFiles("templates/search.html")
 	if err != nil {
 		log.Printf("Parse Error: %v", err)

@@ -41,13 +41,13 @@
 <input list="searchid" id="searchbar" name="searchbar" />
 <datalist id="searchid">
   {{range .}}
-    <option value={{.Name}}>  
-        <option value={{.FirstAlbum}}>
-          <option value={{.CreationDate}}>
+    <option value={{.Name}}#BandName>
+        <option value={{.FirstAlbum}}#FirstAlbumDate>
+          <option value={{.CreationDate}}#CreationYear>
             {{range $key, $value:=.Members}}
-            <option value={{$value}}> {{end}} 
+            <option value={{$value}}#Member> {{end}} 
       {{range $key, $value := .DatesLocations}}
-      <option value={{$key}}>{{end}} {{end}} 
+      <option value={{$key}}#Location>{{end}} {{end}} 
      
 </datalist>
 <input type="submit" value="Search">

@@ -2,8 +2,8 @@ package groupietracker
 
 import (
 	"fmt"
-	"os"
 	"strconv"
+	"strings"
 )
 
 // func SearchFull(data []ArtistAllData, SearchCreation int, SearchFirst, SearchName string) []ArtistAllData {
@@ -22,8 +22,7 @@ func SearchByCreationYear(data []ArtistAllData, searchCreationYear string) []Art
 	var artistAllData []ArtistAllData
 	intSearchCreationYear, err := strconv.Atoi(searchCreationYear)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(2)
+		return nil
 	}
 	for _, artist := range data {
 		if intSearchCreationYear == artist.CreationDate {
@@ -51,6 +50,19 @@ func SearchByName(data []ArtistAllData, searchName string) []ArtistAllData {
 		if searchName == artist.Name {
 			artistAllData = append(artistAllData, artist)
 		}
+
+		
+
+	}
+	fmt.Println(artistAllData, "------")
+	if artistAllData == nil {
+		capname := strings.Title(searchName)
+		for _, artist := range data {
+			if capname == artist.Name {
+				artistAllData = append(artistAllData, artist)
+				fmt.Println("itsduplicate")
+			}
+		}
 	}
 	fmt.Println("searchedbyname")
 	return artistAllData
@@ -58,6 +70,9 @@ func SearchByName(data []ArtistAllData, searchName string) []ArtistAllData {
 
 func SearchByLocation(data []ArtistAllData, searchLocation string) []ArtistAllData {
 	var artistAllData []ArtistAllData
+	if searchLocation == "queen" || searchLocation == "Queen" {
+		searchLocation = "queensland-australia"
+	}
 	for _, artist := range data {
 		for i := 0; i < len(artist.Locations); i++ {
 			if searchLocation == artist.Locations[i] {
@@ -65,6 +80,7 @@ func SearchByLocation(data []ArtistAllData, searchLocation string) []ArtistAllDa
 			}
 		}
 	}
+	fmt.Println(searchLocation)
 	fmt.Println("searchedbylocations")
 	return artistAllData
 }
@@ -78,6 +94,17 @@ func SearchByMember(data []ArtistAllData, searchMember string) []ArtistAllData {
 			}
 		}
 	}
+	if artistAllData == nil {
+		capmember := strings.Title(searchMember)
+		for _, artist := range data {
+			for i := 0; i < len(artist.Members); i++ {
+				if capmember == artist.Members[i] {
+					artistAllData = append(artistAllData, artist)
+				}
+			}
+		}
+	}
+
 	fmt.Println("searchedbymembers")
 	return artistAllData
 }
